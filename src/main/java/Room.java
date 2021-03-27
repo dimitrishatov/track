@@ -1,22 +1,28 @@
 import java.util.UUID;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Date;
+import java.util.Calendar;
 
 public class Room {
    private final UUID ROOM_KEY;
+   private final String roomName;
    private ArrayList<User> users;
    private ArrayList<Habit> habits;
    private HashMap<User, Integer> scores;
-   private Date endDate;
+   private Calendar endDate;
 
-   public Room(ArrayList<User> users, ArrayList<Habit> habits, Date endDate) {
+   public Room(String roomName,ArrayList<User> users, ArrayList<Habit> habits, Calendar endDate) {
       ROOM_KEY = UUID.randomUUID();
       scores = new HashMap<User, Integer>();
 
+      this.roomName = roomName;
       this.users = users;
       this.habits = habits;
       this.endDate = endDate;
+   }
+
+   public String getRoomName() {
+      return roomName;
    }
 
    public UUID getROOM_KEY() {
@@ -31,7 +37,7 @@ public class Room {
       return users;
    }
 
-   public Date getEndDate() {
+   public Calendar getEndDate() {
       return endDate;
    }
 
