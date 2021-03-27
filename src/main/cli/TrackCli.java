@@ -1,7 +1,7 @@
 public class TrackCli {
     public static void main(String[] args) {
 
-        User user = new User();
+        Person user = new Person();
         user.initialize();
     }
 }

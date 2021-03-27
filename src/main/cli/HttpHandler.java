@@ -11,13 +11,12 @@ public class HttpHandler {
     private final static String base = "http://localhost:4567/";
     private final static OkHttpClient client = new OkHttpClient();
     private final Moshi moshi = new Moshi.Builder().build();
-    private final JsonAdapter<> gistJsonAdapter = moshi.adapter()
 
-    public static String getRequest(String url) throws IOException {
+    public static Response getRequest(String url) throws IOException {
         Request request = buildRequest(url);
         Response response = client.newCall(request).execute();
 
-        return response.body().string();
+        return response;
     }
 
     private static Request buildRequest(String url) {

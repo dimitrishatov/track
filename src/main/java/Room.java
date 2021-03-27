@@ -5,14 +5,14 @@ import java.util.Date;
 
 public class Room {
    private final UUID ROOM_KEY;
-   private ArrayList<User> users;
+   private ArrayList<Person> users;
    private ArrayList<Habit> habits;
-   private HashMap<User, Integer> scores;
+   private HashMap<Person, Integer> scores;
    private Date endDate;
 
-   public Room(ArrayList<User> users, ArrayList<Habit> habits, Date endDate) {
+   public Room(ArrayList<Person> users, ArrayList<Habit> habits, Date endDate) {
       ROOM_KEY = UUID.randomUUID();
-      scores = new HashMap<User, Integer>();
+      scores = new HashMap<Person, Integer>();
 
       this.users = users;
       this.habits = habits;
@@ -27,7 +27,7 @@ public class Room {
       return habits;
    }
 
-   public ArrayList<User> getUsers() {
+   public ArrayList<Person> getUsers() {
       return users;
    }
 
@@ -35,7 +35,7 @@ public class Room {
       return endDate;
    }
 
-   public HashMap<User, Integer> getScores() {
+   public HashMap<Person, Integer> getScores() {
       return scores;
    }
 }
