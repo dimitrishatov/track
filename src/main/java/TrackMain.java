@@ -18,9 +18,7 @@ public class TrackMain {
             return 400;
          }
          response.status(200);
-         return 200;
+         return request.params(":name") + "was added";
       });
-
-
    }
 }
