@@ -1,3 +1,5 @@
+package cli;
+
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import okhttp3.OkHttpClient;

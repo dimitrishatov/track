@@ -1,3 +1,7 @@
+package cli;
+
+import cli.HttpHandler;
+
 import java.io.IOException;
 import java.util.Scanner;
 
