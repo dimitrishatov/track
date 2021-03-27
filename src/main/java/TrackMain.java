@@ -13,12 +13,13 @@ public class TrackMain {
 
       // User is added
       post("/users/:name", (request, response) -> {
+         System.out.println(request.params(":name"));
          if (!usersAPI.addUser(request.params(":name"))) {
             response.status(400);
             return 400;
          }
          response.status(200);
-         return request.params(":name") + "was added";
+         return 200;
       });
    }
 }
