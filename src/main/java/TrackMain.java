@@ -8,10 +8,18 @@ public class TrackMain {
       UsersAPI usersAPI = new UsersAPI();
       RoomsAPI roomsAPI = new RoomsAPI();
 
+      get("/users", (req, res) -> map.writeValueAsString(usersAPI));
+      get("/rooms", (req, res) -> map.writeValueAsString(roomsAPI));
 
-      User exampleUser = new User("dimitri");
-
-      get("/user", (req, res) -> map.writeValueAsString(exampleUser));
+      // User is added
+      post("/users/:name", (request, response) -> {
+         if (!usersAPI.addUser(request.params(":name"))) {
+            response.status(400);
+            return 400;
+         }
+         response.status(200);
+         return 200;
+      });
 
 
    }
