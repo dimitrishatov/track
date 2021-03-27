@@ -1,3 +1,5 @@
+package server;
+
 import static spark.Spark.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -11,7 +13,7 @@ public class TrackMain {
       get("/users", (req, res) -> map.writeValueAsString(usersAPI));
       get("/rooms", (req, res) -> map.writeValueAsString(roomsAPI));
 
-      // User is added
+      // server.User is added
       post("/users/:name", (request, response) -> {
          System.out.println(request.params(":name"));
          if (!usersAPI.addUser(request.params(":name"))) {

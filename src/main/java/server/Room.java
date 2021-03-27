@@ -1,3 +1,5 @@
+package server;
+
 import java.util.UUID;
 import java.util.ArrayList;
 import java.util.HashMap;

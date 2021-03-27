@@ -7,7 +7,6 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 import java.io.IOException;
-import java.util.Optional;
 
 public class HttpHandler {
     private final static String base = "http://localhost:4567/";
@@ -15,10 +14,7 @@ public class HttpHandler {
     private final Moshi moshi = new Moshi.Builder().build();
 
     public static Response getRequest(String url) throws IOException {
-        Request request = buildRequest(url);
-        Response response = client.newCall(request).execute();
-
-        return response;
+        return client.newCall(buildRequest(url)).execute();
     }
 
     private static Request buildRequest(String url) {
