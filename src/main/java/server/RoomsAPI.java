@@ -3,6 +3,7 @@ package server;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 
 public class RoomsAPI {
    private List<Room> rooms;
@@ -31,11 +32,17 @@ public class RoomsAPI {
 
    public Room getRoomByName(String name) {
       for (Room room : rooms) {
-         if(room.getRoomName().equals(name)) {
+         if (room.getRoomName().equals(name)) {
             return room;
          }
       }
       return null;
+   }
+
+   public Optional<Room> getRoomForUser(String username, String roomname) {
+      return rooms.stream().filter(room -> room.getRoomName().equals(roomname))
+              .filter(room -> room.getUsers().stream().anyMatch(user -> user.getUserName().equals(username)))
+              .findAny();
    }
 
    public List<Room> getRooms() {

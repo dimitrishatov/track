@@ -32,6 +32,4 @@ public class UsersAPI {
       users.add(new User(username));
       return true;
    }
-
-
 }

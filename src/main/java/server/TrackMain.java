@@ -3,6 +3,7 @@ package server;
 import static spark.Spark.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class TrackMain {
    public static void main(String[] args) {
@@ -20,6 +21,17 @@ public class TrackMain {
       get("/rooms", (req, res) -> {
          res.type("application/json");
          return map.writeValueAsString(roomsAPI);
+      });
+
+      get("/rooms/:username/:roomname", (req, res) -> {
+         Optional<Room> room = roomsAPI.getRoomForUser(req.params(":username"), req.params(":roomname"));
+         if (room.isEmpty()) {
+            res.status(400);
+            return 400;
+         } else {
+            res.type("application/json");
+            return map.writeValueAsString(room.get());
+         }
       });
 
 
