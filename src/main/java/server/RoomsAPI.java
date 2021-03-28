@@ -12,7 +12,7 @@ public class RoomsAPI {
       rooms = new ArrayList<Room>();
    }
 
-   public void addRoom(String roomName, User owner, int days) {
+   public void addRoom(String roomName, User owner) {
       ArrayList<Habit> habits = new ArrayList<>();
       rooms.add(new Room(roomName, owner, habits));
    }
