@@ -13,6 +13,14 @@ public class UsersAPI {
       return users;
    }
 
+   public User getUserByName(String name) {
+      for (User user : users) {
+         if (name.equals(user.getUserName()))
+            return user;
+      }
+      return new User("void");
+   }
+
    public boolean addUser(String username) {
       // Check if name exists
       for (User user : users) {
