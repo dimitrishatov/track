@@ -80,7 +80,7 @@ public class TrackMain {
             return 400;
          }
          else {
-            Room room = roomsAPI.getRoomByName(request.params("roomName"));
+            Room room = roomsAPI.getRoomByName(request.params(":roomName"));
             User user = usersAPI.getUserByName(request.params(":username"));
 
             room.addUser(user);
@@ -88,6 +88,14 @@ public class TrackMain {
             response.status(200);
             return 200;
          }
+      });
+
+      // Add habit to be tracked to room
+      post("/rooms/:roomName/:habit/:pointValue", (request, response) -> {
+         Room room = roomsAPI.getRoomByName(request.params(":roomName"));
+         room.getHabits().add(new Habit(request.params(":habit"), Integer.parseInt(request.params(":pointValue"))));
+         response.status(200);
+         return 200;
       });
    }
 }
