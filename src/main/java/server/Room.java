@@ -1,16 +1,13 @@
 package server;
 
-import java.util.UUID;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Calendar;
+import java.util.*;
 
 public class Room {
    private final UUID ROOM_KEY;
    private final String roomName;
-   private ArrayList<User> users;
-   private ArrayList<Habit> habits;
-   private HashMap<User, Integer> scores;
+   private List<User> users;
+   private List<Habit> habits;
+   private Map<User, Integer> scores;
    private Calendar endDate;
 
    public Room(String roomName,ArrayList<User> users, ArrayList<Habit> habits, Calendar endDate) {
@@ -31,11 +28,11 @@ public class Room {
       return ROOM_KEY;
    }
 
-   public ArrayList<Habit> getHabits() {
+   public List<Habit> getHabits() {
       return habits;
    }
 
-   public ArrayList<User> getUsers() {
+   public List<User> getUsers() {
       return users;
    }
 
@@ -43,7 +40,11 @@ public class Room {
       return endDate;
    }
 
-   public HashMap<User, Integer> getScores() {
+   public Map<User, Integer> getScores() {
       return scores;
+   }
+
+   public String toString() {
+      return roomName;
    }
 }

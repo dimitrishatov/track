@@ -2,9 +2,10 @@ package server;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class RoomsAPI {
-   private ArrayList<Room> rooms;
+   private List<Room> rooms;
 
    public RoomsAPI() {
       rooms = new ArrayList<Room>();
@@ -30,7 +31,7 @@ public class RoomsAPI {
       return false;
    }
 
-   public ArrayList<Room> getRooms() {
+   public List<Room> getRooms() {
       return rooms;
    }
 }

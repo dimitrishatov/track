@@ -11,7 +11,10 @@ public class TrackMain {
       RoomsAPI roomsAPI = new RoomsAPI();
 
       get("/users", (req, res) -> map.writeValueAsString(usersAPI));
-      get("/rooms", (req, res) -> map.writeValueAsString(roomsAPI));
+      get("/rooms", (req, res) -> {
+         res.type("application/json");
+         return map.writeValueAsString(roomsAPI);
+      });
 
       // server.User is added
       post("/users/:name", (request, response) -> {
