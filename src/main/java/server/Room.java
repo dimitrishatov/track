@@ -33,6 +33,10 @@ public class Room {
       return ROOM_KEY;
    }
 
+   public int getDays() {
+      return days;
+   }
+
    public List<Habit> getHabits() {
       return habits;
    }
