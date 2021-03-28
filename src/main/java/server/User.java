@@ -1,12 +1,13 @@
 package server;
 
+import java.util.List;
 import java.util.UUID;
 import java.util.ArrayList;
 
 public class User {
     private final UUID USER_ID;
     private final String userName;
-    private final ArrayList<UUID> roomIDs;
+    private final List<UUID> roomIDs;
 
     public User(String userName) {
         USER_ID = UUID.randomUUID();
@@ -22,7 +23,7 @@ public class User {
         return USER_ID;
     }
 
-    public ArrayList<UUID> getRoomIDs() {
+    public List<UUID> getRoomsIDS() {
         return roomIDs;
     }
 }
