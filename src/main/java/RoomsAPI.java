@@ -8,20 +8,24 @@ public class RoomsAPI {
       rooms = new ArrayList<Room>();
    }
 
-   public boolean addRoom(String roomName, User owner) {
-      for (Room room : rooms) {
-         if (roomName.equals(room.getRoomName()))
-            return false;
-      }
+   public void addRoom(String roomName, User owner, int days) {
       ArrayList<Habit> habits = new ArrayList<>();
       ArrayList<User> users = new ArrayList<>();
       users.add(owner);
 
       Calendar endDate = Calendar.getInstance();
-      endDate.add(Calendar.DAY_OF_YEAR, 30);
+      endDate.add(Calendar.DAY_OF_YEAR, days);
 
       rooms.add(new Room(roomName, users, habits, endDate));
-      return true;
+   }
+
+   public boolean roomAlreadyExists(String roomName) {
+      for (Room room : rooms) {
+         if (roomName.equals(room.getRoomName())) {
+            return true;
+         }
+      }
+      return false;
    }
 
    public ArrayList<Room> getRooms() {

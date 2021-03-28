@@ -13,7 +13,6 @@ public class TrackMain {
 
       // User is added
       post("/users/:name", (request, response) -> {
-         System.out.println(request.params(":name"));
          if (!usersAPI.addUser(request.params(":name"))) {
             response.status(400);
             return 400;
@@ -23,8 +22,15 @@ public class TrackMain {
       });
 
       // Adding a room
-      post("/rooms/roomName=:roomName&owner=:owner", (request, response) -> {
-
+      post("/rooms/roomName=:roomName&owner=:owner&days=:days", (request, response) -> {
+         if (roomsAPI.roomAlreadyExists(request.params(":roomName"))) {
+            response.status(400);
+            return 400;
+         }
+//         else {
+//            roomsAPI.addRoom(request.params(":roomName"), request.params())
+//
+//         }
          return 0;
       });
    }
