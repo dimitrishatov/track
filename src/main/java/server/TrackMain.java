@@ -56,7 +56,7 @@ public class TrackMain {
             String name = request.params(":owner");
             User owner = usersAPI.getUserByName(name);
             ArrayList<Habit> habits = new ArrayList<>();
-            Room newRoom = new Room(request.params(":roomName"), owner, habits, Integer.parseInt(request.params(":days")));
+            Room newRoom = new Room(request.params(":roomName"), owner, habits);
             roomsAPI.addRoom(newRoom);
             response.status(200);
             return 200;
@@ -99,6 +99,7 @@ public class TrackMain {
          return 200;
       });
 
+      // Update points based on habit for username
       post("/rooms/:roomName/:habit/:username", (request, response) -> {
          Room room = roomsAPI.getRoomByName(request.params(":roomName"));
          int points = room.getPointValOfHabit(request.params(":habit"));
@@ -110,5 +111,7 @@ public class TrackMain {
          response.status(200);
          return 200;
       });
+
+      //TODO: list habits for given room endpoint
    }
 }

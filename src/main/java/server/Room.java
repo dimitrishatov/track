@@ -10,7 +10,7 @@ public class Room {
    private Map<User, Integer> scores;
    private Date startDate;
 
-   public Room(String roomName, User owner, ArrayList<Habit> habits, int days) {
+   public Room(String roomName, User owner, ArrayList<Habit> habits) {
       ROOM_KEY = UUID.randomUUID();
       scores = new HashMap<User, Integer>();
 
