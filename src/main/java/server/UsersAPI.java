@@ -18,7 +18,7 @@ public class UsersAPI {
          if (name.equals(user.getUserName()))
             return user;
       }
-      return new User("void");
+      return null;
    }
 
    public boolean addUser(String username) {

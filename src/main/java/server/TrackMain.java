@@ -45,6 +45,35 @@ public class TrackMain {
             ArrayList<Habit> habits = new ArrayList<>();
             Room newRoom = new Room(request.params(":roomName"), owner, habits, Integer.parseInt(request.params(":days")));
             roomsAPI.addRoom(newRoom);
+            response.status(200);
+            return 200;
+         }
+      });
+
+      // Adding person to room
+      post("/rooms/:roomName/:username", (request, response) -> {
+         // username does not exist
+         if (!usersAPI.getUsers().contains(usersAPI.getUserByName(request.params(":username")))) {
+            response.status(400);
+            return 400;
+         }
+         // user is already in room
+         else if (roomsAPI.getRoomByName(request.params(":roomName")).getUsers().contains(usersAPI.getUserByName(request.params(":username")))) {
+            response.status(400);
+            return 400;
+         }
+         // room does not exist
+         else if (!roomsAPI.roomAlreadyExists(request.params(":roomName"))){
+            response.status(400);
+            return 400;
+         }
+         else {
+            Room room = roomsAPI.getRoomByName(request.params("roomName"));
+            User user = usersAPI.getUserByName(request.params(":username"));
+
+            room.addUser(user);
+            user.getRoomIDs().add(room.getROOM_KEY());
+            response.status(200);
             return 200;
          }
       });

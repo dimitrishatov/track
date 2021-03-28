@@ -49,6 +49,10 @@ public class Room {
       return scores;
    }
 
+   public void addUser(User user) {
+      users.add(user);
+   }
+
    public String toString() {
       return roomName;
    }
