@@ -105,8 +105,8 @@ public class TrackMain {
          int points = room.getPointValOfHabit(request.params(":habit"));
          User key = usersAPI.getUserByName(request.params(":username"));
 
-         Map<UUID, Integer> hmap = room.getScores();
-         hmap.put(key.getUSER_ID(), hmap.get(key.getUSER_ID()) + points);
+         Map<String, Integer> hmap = room.getScores();
+         hmap.put(key.getUserName(), hmap.get(key.getUserName()) + points);
          room.setScores(hmap);
          response.status(200);
          return 200;
@@ -122,7 +122,7 @@ public class TrackMain {
       get("leaderboard/rooms/:roomName", (request, response) -> {
          Room room = roomsAPI.getRoomByName(request.params(":roomName"));
          response.type("application/json");
-         return map.writeValueAsString(room.sortByValue());
+         return map.writeValueAsString(new Person.ScoresWrapper(room.sortByValue()));
       });
    }
 }

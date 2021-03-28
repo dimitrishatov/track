@@ -10,6 +10,7 @@ import server.RoomsAPI;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 
@@ -60,8 +61,18 @@ public class Person {
         }
     }
 
-    public void showLeaderboard() {
+    public void showLeaderboard() throws IOException {
+        Response res = HttpHandler.getRequest("leaderboard/rooms/" + roomName);
 
+        if (res.code() < 300) {
+            try (ResponseBody responseBody = res.body()) {
+                JsonAdapter<ScoresWrapper> jsonAdapter = moshi.adapter(ScoresWrapper.class);
+                jsonAdapter.fromJson(responseBody.string())
+                        .scores
+                        .entrySet()
+                        .forEach(val -> System.out.println(val.getKey() + " " + val.getValue()));
+            }
+        }
     }
 
     public void createRoom() throws IOException {
@@ -151,6 +162,14 @@ public class Person {
 
         public HabitsWrapper(List<Habit> habits) {
             this.habits = habits;
+        }
+    }
+
+    public static class ScoresWrapper {
+        public Map<String, Integer> scores;
+
+        public ScoresWrapper(Map<String, Integer> scores) {
+            this.scores = scores;
         }
     }
 
