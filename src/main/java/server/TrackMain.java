@@ -112,9 +112,10 @@ public class TrackMain {
       });
 
       // Lists habits for given room
-      get("/rooms/listHabits/:roomName", (request, response) -> {
+      get("listHabits/rooms/:roomName", (request, response) -> {
          Room room = roomsAPI.getRoomByName(request.params(":roomName"));
          response.type("application/json");
+         System.out.println(room.getHabits().toString());
          return map.writeValueAsString(room.getHabits());
       });
    }
