@@ -7,7 +7,11 @@ import java.util.Scanner;
 public class TrackCli {
     public static void main(String[] args) {
         Person user = new Person();
-        user.initialize();
+        try {
+            user.initialize();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         try {
             mainLoop(user);
@@ -34,6 +38,10 @@ public class TrackCli {
                 case 'E':
                     user.enterRoom();
                     break;
+                case 'L':
+                    user.showLeaderboard();
+                    break;
+
             }
         }
 
@@ -45,6 +53,7 @@ public class TrackCli {
         System.out.println("(V)iew rooms");
         System.out.println("(P)ublic rooms");
         System.out.println("(E)nter room");
+        System.out.println("(L)eaderboard");
         System.out.println("(Q)uit");
         System.out.println();
 

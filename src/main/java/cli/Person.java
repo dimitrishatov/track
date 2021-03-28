@@ -22,21 +22,16 @@ public class Person {
                 .build();
     }
 
-
-    public void initialize() {
-        try {
-            System.out.println("Welcome to Track! Enter your username to get started");
-            userName = Util.getLine().split(" ")[0];
-            if (HttpHandler.postRequest("users/" + userName)
+    public void initialize() throws IOException {
+        System.out.println("Welcome to Track! Enter your username to get started");
+        userName = Util.getLine().split(" ")[0];
+        if (HttpHandler.postRequest("users/" + userName)
                 .code() < 300) {
-                System.out.println("A new user has been created and saved as " + userName);
-            } else {
-                System.out.println("You're username has been saved as " + userName);
-            }
-            System.out.println();
-        } catch (IOException e) {
-            System.out.println("Could not connect to server");
+            System.out.println("A new user has been created and saved as " + userName);
+        } else {
+            System.out.println("Your username has been saved as " + userName);
         }
+        System.out.println();
     }
 
     public void enterRoom() throws IOException {
@@ -52,6 +47,14 @@ public class Person {
             currentRoomID = jsonAdapter.fromJson(res.body().string()).getROOM_KEY();
             PrefixFetcher.setRoom(roomname);
             System.out.println("Room entered");
+        }
+    }
+
+    public void showLeaderboard() {
+        if (currentRoomID == null) {
+            System.out.println("You must be inside of a room to see leaderboard");
+        } else {
+            // TODO: 3/28/21
         }
     }
 
