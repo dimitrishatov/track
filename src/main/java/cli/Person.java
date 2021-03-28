@@ -1,6 +1,8 @@
 package cli;
 
 import com.squareup.moshi.*;
+import okhttp3.Response;
+import server.Room;
 import server.RoomsAPI;
 
 import java.io.IOException;
@@ -10,6 +12,16 @@ import java.util.UUID;
 
 public class Person {
     private String userName;
+    private UUID currentRoomID = null;
+    private Moshi moshi;
+
+    public Person () {
+        moshi = new Moshi.Builder()
+                .add(new UuidAdapter())
+                .add(new CalendarAdapter())
+                .build();
+    }
+
 
     public void initialize() {
         try {
@@ -29,7 +41,18 @@ public class Person {
 
     public void enterRoom() throws IOException {
         System.out.println("Put in the room name you want to go inside");
-        PrefixFetcher.setRoom(Util.getLine());
+        String roomname = Util.getLine();
+
+        Response res = HttpHandler.getRequest(String.format("rooms/%s/%s", userName, roomname));
+
+        if (res.code() > 299) {
+            System.out.println("That room doesn't exist");
+            return;
+        } else {
+            JsonAdapter<Room> jsonAdapter = moshi.adapter(Room.class);
+            currentRoomID = jsonAdapter.fromJson(res.body().string()).getROOM_KEY();
+            PrefixFetcher.setRoom(roomname);
+        }
     }
 
     public void createRoom() throws IOException {
@@ -61,10 +84,6 @@ public class Person {
     }
 
     private void viewRooms(String endpoint) throws IOException {
-        Moshi moshi = new Moshi.Builder()
-                .add(new UuidAdapter())
-                .add(new CalendarAdapter())
-                .build();
         JsonAdapter<RoomsAPI> jsonAdapter = moshi.adapter(RoomsAPI.class);
 
         String res = HttpHandler.getRequest(endpoint)
