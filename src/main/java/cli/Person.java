@@ -27,6 +27,11 @@ public class Person {
         }
     }
 
+    public void enterRoom() throws IOException {
+        System.out.println("Put in the room name you want to go inside");
+        PrefixFetcher.setRoom(Util.getLine());
+    }
+
     public void createRoom() throws IOException {
         System.out.println("Enter room name and days the room should last for " +
                 "separated by spaces");

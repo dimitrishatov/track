@@ -31,6 +31,9 @@ public class TrackCli {
                 case 'P':
                     user.viewPublicRooms();
                     break;
+                case 'E':
+                    user.enterRoom();
+                    break;
             }
         }
 
@@ -41,6 +44,7 @@ public class TrackCli {
         System.out.println("(C)reate room");
         System.out.println("(V)iew rooms");
         System.out.println("(P)ublic rooms");
+        System.out.println("(E)nter room");
         System.out.println("(Q)uit");
         System.out.println();
 
