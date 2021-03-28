@@ -4,9 +4,9 @@ import cli.HttpHandler;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import server.Room;
+import server.RoomsAPI;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -34,7 +34,7 @@ public class Person {
 
     public void viewRooms() {
         Moshi moshi = new Moshi.Builder().build();
-        JsonAdapter<Rooms> jsonAdapter = moshi.adapter(Rooms.class);
+        JsonAdapter<RoomsAPI> jsonAdapter = moshi.adapter(RoomsAPI.class);
         try {
             String choice;
             do {
@@ -43,14 +43,14 @@ public class Person {
             } while (!choice.equalsIgnoreCase("private") &&
                     !choice.equalsIgnoreCase("public"));
 
-            HttpHandler.getRequest("viewRooms/" + choice)
+            String res = HttpHandler.getRequest("viewRooms/" + choice)
                 .toString();
+
+            jsonAdapter.fromJson(res)
+                    .getRooms()
+                    .forEach(System.out::println);
         } catch (IOException e) {
             System.out.println("Could not connect to server");
         }
-    }
-
-    class Rooms {
-        ArrayList<Room> rooms;
     }
 }
