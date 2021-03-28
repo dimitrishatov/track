@@ -23,7 +23,7 @@ public class User {
         return USER_ID;
     }
 
-    public List<UUID> getRoomsIDS() {
+    public List<UUID> getRoomIDs() {
         return roomIDs;
     }
 }
