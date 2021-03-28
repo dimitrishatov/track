@@ -161,7 +161,7 @@ public class Person {
         System.out.println("Enter name of room you want to join");
         String name = Util.getLine();
 
-        Response res = HttpHandler.postRequest(String.format("rooms/join/%s/%s", name, userName));
+        Response res = HttpHandler.getRequest(String.format("roomJoin/%s/%s", name, userName));
 
         if (res.code() < 300) {
             System.out.println("You were added to the room!");

@@ -125,7 +125,7 @@ public class TrackMain {
          return map.writeValueAsString(new Person.ScoresWrapper(room.sortByValue()));
       });
 
-      post("rooms/join/:roomName/:userName", (req, res) -> {
+      get("roomJoin/:roomName/:userName", (req, res) -> {
          Room room = roomsAPI.getRoomByName(req.params(":roomName"));
 
          if (room == null) {
