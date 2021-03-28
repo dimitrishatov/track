@@ -1,5 +1,6 @@
 package cli;
 
+import java.io.IOException;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -7,10 +8,15 @@ public class TrackCli {
     public static void main(String[] args) {
         Person user = new Person();
         user.initialize();
-        mainLoop(user);
+
+        try {
+            mainLoop(user);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public static void mainLoop(Person user) {
+    public static void mainLoop(Person user) throws IOException {
         Scanner scanner = new Scanner(System.in);
 
         char c;
@@ -20,7 +26,10 @@ public class TrackCli {
                     user.createRoom();
                     break;
                 case 'V':
-                    user.viewRooms();
+                    user.viewPrivateRooms();
+                    break;
+                case 'P':
+                    user.viewPublicRooms();
                     break;
             }
         }
@@ -30,8 +39,10 @@ public class TrackCli {
 
     private static char displayMenu(Scanner scanner) {
         System.out.println("(C)reate room");
-        System.out.println("(V)iew room");
+        System.out.println("(V)iew rooms");
+        System.out.println("(P)ublic rooms");
         System.out.println("(Q)uit");
+        System.out.println();
 
         return Util.getChar();
     }
