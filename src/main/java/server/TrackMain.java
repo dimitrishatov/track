@@ -1,10 +1,11 @@
 package server;
 
 import static spark.Spark.*;
+
+import cli.Person;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Optional;
+
+import java.util.*;
 
 public class TrackMain {
    public static void main(String[] args) {
@@ -104,8 +105,8 @@ public class TrackMain {
          int points = room.getPointValOfHabit(request.params(":habit"));
          User key = usersAPI.getUserByName(request.params(":username"));
 
-         Map<User, Integer> hmap = room.getScores();
-         hmap.put(key, hmap.get(key) + points);
+         Map<UUID, Integer> hmap = room.getScores();
+         hmap.put(key.getUSER_ID(), hmap.get(key.getUSER_ID()) + points);
          room.setScores(hmap);
          response.status(200);
          return 200;
@@ -115,7 +116,7 @@ public class TrackMain {
       get("listHabits/rooms/:roomName", (request, response) -> {
          Room room = roomsAPI.getRoomByName(request.params(":roomName"));
          response.type("application/json");
-         return map.writeValueAsString(room.getHabits());
+         return map.writeValueAsString(new Person.HabitsWrapper(room.getHabits()));
       });
 
       get("leaderboard/rooms/:roomName", (request, response) -> {

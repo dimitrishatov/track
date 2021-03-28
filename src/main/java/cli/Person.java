@@ -2,11 +2,14 @@ package cli;
 
 import com.squareup.moshi.*;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
+import server.Habit;
 import server.Room;
 import server.RoomsAPI;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -46,11 +49,14 @@ public class Person {
             return false;
         } else {
             JsonAdapter<Room> jsonAdapter = moshi.adapter(Room.class);
-            currentRoomID = jsonAdapter.fromJson(res.body().string()).getROOM_KEY();
-            roomName = jsonAdapter.fromJson(res.body().string()).getRoomName();
-            PrefixFetcher.setRoom(roomName);
-            System.out.println("Room entered");
-            return true;
+            try (ResponseBody responseBody = res.body()) {
+                Room room = jsonAdapter.fromJson(responseBody.string());
+                currentRoomID = room.getROOM_KEY();
+                roomName = room.getRoomName();
+                PrefixFetcher.setRoom(roomName);
+                System.out.println("Room entered");
+                return true;
+            }
         }
     }
 
@@ -83,13 +89,13 @@ public class Person {
     private void viewRooms(String endpoint) throws IOException {
         JsonAdapter<RoomsAPI> jsonAdapter = moshi.adapter(RoomsAPI.class);
 
-        String res = HttpHandler.getRequest(endpoint)
-                .body()
-                .string();
+        Response res = HttpHandler.getRequest(endpoint);
 
-        jsonAdapter.fromJson(res)
-                .getRooms()
-                .forEach(System.out::println);
+        try (ResponseBody responseBody = res.body()){
+            jsonAdapter.fromJson(responseBody.string())
+                    .getRooms()
+                    .forEach(System.out::println);
+        }
     }
 
     public void trackHabit() throws IOException {
@@ -127,8 +133,25 @@ public class Person {
         }
     }
 
-    public void listHabits() {
+    public void listHabits() throws IOException {
+        Response res = HttpHandler.getRequest("listHabits/rooms/" + roomName);
 
+        if (res.code() < 300) {
+            JsonAdapter<HabitsWrapper> jsonAdapter = moshi.adapter(HabitsWrapper.class);
+            jsonAdapter.fromJson(res.body().string())
+                    .habits
+                    .forEach(habit -> System.out.println(habit.getName() + " " + habit.getPointVal()));
+        } else {
+            System.out.println("Could not get habits");
+        }
+    }
+
+    public static class HabitsWrapper {
+        public List<Habit> habits;
+
+        public HabitsWrapper(List<Habit> habits) {
+            this.habits = habits;
+        }
     }
 
     static class UuidAdapter {
