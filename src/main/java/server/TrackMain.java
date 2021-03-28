@@ -24,16 +24,16 @@ public class TrackMain {
       });
 
       // Adding a room
-      post("/rooms/roomName=:roomName&owner=:owner&days=:days", (request, response) -> {
+      post("/rooms/:roomName/:owner/:days", (request, response) -> {
          if (roomsAPI.roomAlreadyExists(request.params(":roomName"))) {
             response.status(400);
             return 400;
          }
-//         else {
-//            roomsAPI.addRoom(request.params(":roomName"), request.params())
-//
-//         }
-         return 0;
+         else {
+            String name = request.params(":owner");
+            roomsAPI.addRoom(request.params(":roomName"), usersAPI.getUserByName(name), Integer.parseInt(request.params(":days")));
+            return 200;
+         }
       });
    }
 }

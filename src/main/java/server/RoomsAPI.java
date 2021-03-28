@@ -13,6 +13,7 @@ public class RoomsAPI {
    public void addRoom(String roomName, User owner, int days) {
       ArrayList<Habit> habits = new ArrayList<>();
       ArrayList<User> users = new ArrayList<>();
+
       users.add(owner);
 
       Calendar endDate = Calendar.getInstance();

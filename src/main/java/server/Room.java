@@ -39,8 +39,8 @@ public class Room {
       return users;
    }
 
-   public Calendar getEndDate() {
-      return endDate;
+   public String getEndDate() {
+      return endDate.toString();
    }
 
    public HashMap<User, Integer> getScores() {
