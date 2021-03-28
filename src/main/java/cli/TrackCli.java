@@ -39,6 +39,9 @@ public class TrackCli {
                     if (user.enterRoom())
                         roomMenu(user);
                     break;
+                case 'J':
+                    user.joinRoom();
+                    break;
                 case 'L':
                     user.showLeaderboard();
                     break;
@@ -73,10 +76,12 @@ public class TrackCli {
     }
 
     private static char displayMenu() {
+        System.out.println();
         System.out.println("(C)reate room");
         System.out.println("(V)iew rooms");
         System.out.println("(P)ublic rooms");
         System.out.println("(E)nter room");
+        System.out.println("(J)oin room");
         System.out.println("(Q)uit");
         System.out.println();
 
@@ -84,6 +89,7 @@ public class TrackCli {
     }
 
     private static char displayRoomMenu() {
+        System.out.println();
         System.out.println("(T)rack a habit");
         System.out.println("(A)dd habit");
         System.out.println("(H)abits");

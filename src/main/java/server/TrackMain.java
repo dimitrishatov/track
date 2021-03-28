@@ -124,5 +124,20 @@ public class TrackMain {
          response.type("application/json");
          return map.writeValueAsString(new Person.ScoresWrapper(room.sortByValue()));
       });
+
+      post("rooms/join/:roomName/:userName", (req, res) -> {
+         Room room = roomsAPI.getRoomByName(req.params(":roomName"));
+
+         if (room == null) {
+            res.status(400);
+            return "400";
+         }
+
+         User user = usersAPI.getUserByName(req.params(":username"));
+         room.addUser(user);
+
+         res.status(200);
+         return "ok";
+      });
    }
 }

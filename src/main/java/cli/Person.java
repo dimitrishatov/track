@@ -157,6 +157,19 @@ public class Person {
         }
     }
 
+    public void joinRoom() throws IOException {
+        System.out.println("Enter name of room you want to join");
+        String name = Util.getLine();
+
+        Response res = HttpHandler.postRequest(String.format("rooms/join/%s/%s", name, userName));
+
+        if (res.code() < 300) {
+            System.out.println("You were added to the room!");
+        } else {
+            System.out.println("Could not be added");
+        }
+    }
+
     public static class HabitsWrapper {
         public List<Habit> habits;
 
