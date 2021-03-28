@@ -3,6 +3,7 @@ package server;
 import static spark.Spark.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Optional;
 
 public class TrackMain {
@@ -94,6 +95,18 @@ public class TrackMain {
       post("/rooms/:roomName/:habit/:pointValue", (request, response) -> {
          Room room = roomsAPI.getRoomByName(request.params(":roomName"));
          room.getHabits().add(new Habit(request.params(":habit"), Integer.parseInt(request.params(":pointValue"))));
+         response.status(200);
+         return 200;
+      });
+
+      post("/rooms/:roomName/:habit/:username", (request, response) -> {
+         Room room = roomsAPI.getRoomByName(request.params(":roomName"));
+         int points = room.getPointValOfHabit(request.params(":habit"));
+         User key = usersAPI.getUserByName(request.params(":username"));
+
+         Map<User, Integer> hmap = room.getScores();
+         hmap.put(key, hmap.get(key) + points);
+         room.setScores(hmap);
          response.status(200);
          return 200;
       });
