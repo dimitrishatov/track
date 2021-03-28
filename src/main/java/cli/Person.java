@@ -13,6 +13,7 @@ import java.util.UUID;
 public class Person {
     private String userName;
     private UUID currentRoomID = null;
+    private String roomName = null;
     private Moshi moshi;
 
     public Person () {
@@ -34,7 +35,7 @@ public class Person {
         System.out.println();
     }
 
-    public void enterRoom() throws IOException {
+    public boolean enterRoom() throws IOException {
         System.out.println("Put in the room name you want to go inside");
         String roomname = Util.getLine();
 
@@ -42,11 +43,14 @@ public class Person {
 
         if (res.code() > 299) {
             System.out.println("That room doesn't exist in the rooms you belong to");
+            return false;
         } else {
             JsonAdapter<Room> jsonAdapter = moshi.adapter(Room.class);
             currentRoomID = jsonAdapter.fromJson(res.body().string()).getROOM_KEY();
-            PrefixFetcher.setRoom(roomname);
+            roomName = jsonAdapter.fromJson(res.body().string()).getRoomName();
+            PrefixFetcher.setRoom(roomName);
             System.out.println("Room entered");
+            return true;
         }
     }
 
@@ -96,6 +100,45 @@ public class Person {
         jsonAdapter.fromJson(res)
                 .getRooms()
                 .forEach(System.out::println);
+    }
+
+    public void trackHabit() throws IOException {
+        System.out.println("Enter name of habit to update status for");
+
+        String habitName = Util.getLine();
+
+        int status = HttpHandler.postRequest(String.format("rooms/update/%s/%s/%s",
+                roomName, habitName, userName)).code();
+
+        if (status < 300) {
+            System.out.println("Habit was updated");
+        } else {
+            System.out.println("Habit could not be updated");
+        }
+    }
+
+    public void addHabit() throws IOException {
+        System.out.println("Enter name of habit and point value separated by a space");
+
+        String[] info = Util.getLine().split(" ", 2);
+
+        if (info.length != 2) {
+            System.out.println("Incorrect format");
+            return;
+        }
+
+        int status = HttpHandler.postRequest(String.format("rooms/%s/%s/%s", roomName, info[0], info[1]))
+                .code();
+
+        if (status > 299) {
+            System.out.println("Could not create habit");
+        } else {
+            System.out.println("Habit created successfully");
+        }
+    }
+
+    public void listHabits() {
+
     }
 
     static class UuidAdapter {

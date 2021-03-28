@@ -10,4 +10,8 @@ public class PrefixFetcher {
     public static void setRoom(String room) {
         PrefixFetcher.room = room;
     }
+
+    public static void clearRoom() {
+        room = null;
+    }
 }
