@@ -47,7 +47,7 @@ public class TrackMain {
       });
 
       // Adding a room
-      post("/rooms/:roomName/:owner/:days", (request, response) -> {
+      post("/rooms/:roomName/:owner", (request, response) -> {
          if (roomsAPI.roomAlreadyExists(request.params(":roomName"))) {
             response.status(400);
             return 400;
