@@ -55,11 +55,7 @@ public class Person {
     }
 
     public void showLeaderboard() {
-        if (currentRoomID == null) {
-            System.out.println("You must be inside of a room to see leaderboard");
-        } else {
-            // TODO: 3/28/21
-        }
+
     }
 
     public void createRoom() throws IOException {

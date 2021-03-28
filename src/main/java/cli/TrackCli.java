@@ -62,7 +62,9 @@ public class TrackCli {
                 case 'H':
                     user.listHabits();
                     break;
-
+                case 'L':
+                    user.showLeaderboard();
+                    break;
             }
         }
 
