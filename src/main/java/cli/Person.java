@@ -25,7 +25,7 @@ public class Person {
 
     public void initialize() {
         try {
-            System.out.print("Welcome to Track! Enter your username to get started: ");
+            System.out.println("Welcome to Track! Enter your username to get started");
             userName = Util.getLine().split(" ")[0];
             if (HttpHandler.postRequest("users/" + userName)
                 .code() < 300) {
@@ -46,12 +46,12 @@ public class Person {
         Response res = HttpHandler.getRequest(String.format("rooms/%s/%s", userName, roomname));
 
         if (res.code() > 299) {
-            System.out.println("That room doesn't exist");
-            return;
+            System.out.println("That room doesn't exist in the rooms you belong to");
         } else {
             JsonAdapter<Room> jsonAdapter = moshi.adapter(Room.class);
             currentRoomID = jsonAdapter.fromJson(res.body().string()).getROOM_KEY();
             PrefixFetcher.setRoom(roomname);
+            System.out.println("Room entered");
         }
     }
 
