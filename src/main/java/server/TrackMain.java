@@ -46,7 +46,7 @@ public class TrackMain {
       });
 
       // Adding a room
-      post("/rooms/:roomName/:owner", (request, response) -> {
+      post("/rooms/create/:roomName/:owner", (request, response) -> {
          if (roomsAPI.roomAlreadyExists(request.params(":roomName"))) {
             response.status(400);
             return 400;
@@ -63,7 +63,7 @@ public class TrackMain {
       });
 
       // Adding person to room
-      post("/rooms/:roomName/:username", (request, response) -> {
+      post("/rooms/addPerson/:roomName/:username", (request, response) -> {
          // username does not exist
          if (!usersAPI.getUsers().contains(usersAPI.getUserByName(request.params(":username")))) {
             response.status(400);
@@ -111,6 +111,11 @@ public class TrackMain {
          return 200;
       });
 
-      //TODO: list habits for given room endpoint
+      // Lists habits for given room
+      get("/rooms/listHabits/:roomName", (request, response) -> {
+         Room room = roomsAPI.getRoomByName(request.params(":roomName"));
+         response.type("application/json");
+         return map.writeValueAsString(room.getHabits());
+      });
    }
 }
