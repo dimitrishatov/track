@@ -1,13 +1,10 @@
 package cli;
 
-import cli.HttpHandler;
 import com.squareup.moshi.*;
-import server.Room;
 import server.RoomsAPI;
 
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.Scanner;
 import java.util.UUID;
 
 
@@ -30,7 +27,7 @@ public class Person {
     }
 
     public void createRoom() {
-
+        
     }
 
     public void viewRooms() {
