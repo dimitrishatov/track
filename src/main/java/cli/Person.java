@@ -6,7 +6,7 @@ import server.Room;
 import server.RoomsAPI;
 
 import java.io.IOException;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.UUID;
 
 
@@ -19,7 +19,7 @@ public class Person {
     public Person () {
         moshi = new Moshi.Builder()
                 .add(new UuidAdapter())
-                .add(new CalendarAdapter())
+                .add(new DateAdapter())
                 .build();
     }
 
@@ -59,16 +59,10 @@ public class Person {
     }
 
     public void createRoom() throws IOException {
-        System.out.println("Enter room name and days the room should last for " +
-                "separated by spaces");
-        String[] info = Util.getLine().split(" ", 2);
+        System.out.println("Enter room name");
+        String roomName = Util.getLine();
 
-        if (info.length != 2) {
-            System.out.println("Incorrect format");
-            return;
-        }
-
-        int status = HttpHandler.postRequest(String.format("rooms/%s/%s/%s", info[0], userName, info[1]))
+        int status = HttpHandler.postRequest(String.format("rooms/create/%s/%s", roomName, userName))
                 .code();
 
         if (status > 299) {
@@ -149,15 +143,15 @@ public class Person {
         }
     }
 
-    static class CalendarAdapter {
+    static class DateAdapter {
         @ToJson
-        String toJson(Calendar date) {
+        String toJson(Date date) {
             return date.toString();
         }
 
         @FromJson
-        Calendar fromJson(String date) {
-            return Calendar.getInstance();
+        Date fromJson(String date) {
+            return new Date();
         }
     }
 }
