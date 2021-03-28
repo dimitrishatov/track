@@ -68,8 +68,11 @@ public class TrackMain {
             return 400;
          }
          else {
+            Room room = roomsAPI.getRoomByName(request.params("roomName"));
             User user = usersAPI.getUserByName(request.params(":username"));
-            roomsAPI.getRoomByName(request.params("roomName")).addUser(user);
+
+            room.addUser(user);
+            user.getRoomIDs().add(room.getROOM_KEY());
             response.status(200);
             return 200;
          }
