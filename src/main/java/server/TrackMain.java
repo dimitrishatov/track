@@ -100,7 +100,7 @@ public class TrackMain {
       });
 
       // Update points based on habit for username
-      post("/rooms/:roomName/:habit/:username", (request, response) -> {
+      post("/rooms/update/:roomName/:habit/:username", (request, response) -> {
          Room room = roomsAPI.getRoomByName(request.params(":roomName"));
          int points = room.getPointValOfHabit(request.params(":habit"));
          User key = usersAPI.getUserByName(request.params(":username"));
