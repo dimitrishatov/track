@@ -29,6 +29,15 @@ public class RoomsAPI {
       return false;
    }
 
+   public Room getRoomByName(String name) {
+      for (Room room : rooms) {
+         if(room.getRoomName().equals(name)) {
+            return room;
+         }
+      }
+      return null;
+   }
+
    public List<Room> getRooms() {
       return rooms;
    }
