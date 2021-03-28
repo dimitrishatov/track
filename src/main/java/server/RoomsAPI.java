@@ -12,14 +12,11 @@ public class RoomsAPI {
 
    public void addRoom(String roomName, User owner, int days) {
       ArrayList<Habit> habits = new ArrayList<>();
-      ArrayList<User> users = new ArrayList<>();
+      rooms.add(new Room(roomName, owner, habits, days));
+   }
 
-      users.add(owner);
-
-      Calendar endDate = Calendar.getInstance();
-      endDate.add(Calendar.DAY_OF_YEAR, days);
-
-      rooms.add(new Room(roomName, users, habits, endDate));
+   public void addRoom(Room room) {
+      rooms.add(room);
    }
 
    public boolean roomAlreadyExists(String roomName) {

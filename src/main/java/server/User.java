@@ -6,12 +6,12 @@ import java.util.ArrayList;
 public class User {
     private final UUID USER_ID;
     private final String userName;
-    private final ArrayList<Room> rooms;
+    private final ArrayList<UUID> roomIDs;
 
     public User(String userName) {
         USER_ID = UUID.randomUUID();
         this.userName = userName;
-        rooms = new ArrayList<Room>();
+        roomIDs = new ArrayList<UUID>();
     }
 
     public String getUserName() {
@@ -22,7 +22,7 @@ public class User {
         return USER_ID;
     }
 
-    public ArrayList<Room> getRooms() {
-        return rooms;
+    public ArrayList<UUID> getRoomIDs() {
+        return roomIDs;
     }
 }

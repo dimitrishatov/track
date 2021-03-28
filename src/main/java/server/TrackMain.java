@@ -2,6 +2,7 @@ package server;
 
 import static spark.Spark.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.ArrayList;
 
 public class TrackMain {
    public static void main(String[] args) {
@@ -31,7 +32,10 @@ public class TrackMain {
          }
          else {
             String name = request.params(":owner");
-            roomsAPI.addRoom(request.params(":roomName"), usersAPI.getUserByName(name), Integer.parseInt(request.params(":days")));
+            User owner = usersAPI.getUserByName(name);
+            ArrayList<Habit> habits = new ArrayList<>();
+            Room newRoom = new Room(request.params(":roomName"), owner, habits, Integer.parseInt(request.params(":days")));
+            roomsAPI.addRoom(newRoom);
             return 200;
          }
       });

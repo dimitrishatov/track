@@ -11,16 +11,21 @@ public class Room {
    private ArrayList<User> users;
    private ArrayList<Habit> habits;
    private HashMap<User, Integer> scores;
+   private int days;
    private Calendar endDate;
 
-   public Room(String roomName,ArrayList<User> users, ArrayList<Habit> habits, Calendar endDate) {
+   public Room(String roomName, User owner, ArrayList<Habit> habits, int days) {
       ROOM_KEY = UUID.randomUUID();
       scores = new HashMap<User, Integer>();
 
       this.roomName = roomName;
-      this.users = users;
       this.habits = habits;
-      this.endDate = endDate;
+      this.days = days;
+      // Todo: implement calendar
+
+      users = new ArrayList<>();
+      users.add(owner);
+      owner.getRoomIDs().add(this.ROOM_KEY);
    }
 
    public String getRoomName() {
@@ -39,9 +44,9 @@ public class Room {
       return users;
    }
 
-   public String getEndDate() {
-      return endDate.toString();
-   }
+//   public String getEndDate() {
+//      return endDate.toString();
+//   }
 
    public HashMap<User, Integer> getScores() {
       return scores;
