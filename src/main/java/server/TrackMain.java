@@ -35,8 +35,7 @@ public class TrackMain {
          }
       });
 
-
-      // server.User is added
+      // Adding a user
       post("/users/:name", (request, response) -> {
          if (!usersAPI.addUser(request.params(":name"))) {
             response.status(400);

@@ -14,7 +14,7 @@ public class RoomsAPI {
 
    public void addRoom(String roomName, User owner, int days) {
       ArrayList<Habit> habits = new ArrayList<>();
-      rooms.add(new Room(roomName, owner, habits, days));
+      rooms.add(new Room(roomName, owner, habits));
    }
 
    public void addRoom(Room room) {
